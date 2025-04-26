@@ -83,7 +83,5 @@ int main()
             }
         }
     }
-
-    cout<<"Felicidades, obtuvo la victoria";
     return 0;
 }
