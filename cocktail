@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+void cocktail(int *p, int *q){
+    
+    int x=0; 
+    int y=0;
+    int i=0;
+    
+    do{
+        for(int *r=p;r<q;r++){
+            if(*r>*(r+1)){
+                x=*(r+1);
+                *(r+1)=*r;
+                *r=x;
+                i++;
+            }
+        }
+        q--;
+        cout<<"hola"<<endl;
+        for(int *s=q;s>p;s--){
+            if(*s<*(s-1)){
+                y=*s;
+                *s=*(s-1);
+                *(s-1)=y;
+                i++;
+            }
+        }
+        p++;
+        cout<<"hola"<<endl;
+    }while(i!=0 && p<q);
+}
+
+int main(){
+    //int A[]={3,23,20,25,24,11,21,23,26,30,25,3};
+    int A[]={1,2,3,4,5,6,7,8,9,10,11};
+    int tam = sizeof(A)/sizeof(A[0]);
+    
+    cocktail(A,A+tam-1);
+    
+    for (int *r = A; r < A + tam; r++) {
+        cout << *r << " ";
+    }
+    
+    return 0;
+}
