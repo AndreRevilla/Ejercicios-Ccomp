@@ -18,6 +18,11 @@ void cocktail(int *p, int *q){
         }
         q--;
         cout<<"hola"<<endl;
+        
+        if(i==0){
+            break;
+        }
+        
         for(int *s=q;s>p;s--){
             if(*s<*(s-1)){
                 y=*s;
