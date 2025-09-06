@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+class Cola{
+  int A[10];
+  int *head=nullptr;
+  int *tail=nullptr;
+  
+  public:
+  bool push(int val);
+  bool pop(int &val);
+  bool vacio();
+  bool lleno();
+};
+
+bool Cola::vacio(){
+    if(head>tail || (head && tail)==nullptr){
+        return true;
+    else
+        return false;
+}
+
+bool Cola::lleno(){
+    
+}
+
+int main() {
+  
+}
