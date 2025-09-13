@@ -1,29 +1,69 @@
 #include <iostream>
 using namespace std;
 
+template <class T>
+
 class Cola{
-  int A[10];
-  int *head=nullptr;
-  int *tail=nullptr;
+  T A[10];
+  T *head=nullptr;
+  T *tail=nullptr;
+  T *final=A+9;
   
   public:
-  bool push(int val);
-  bool pop(int &val);
+  bool push(T val);
+  bool pop(T &val);
   bool vacio();
   bool lleno();
 };
 
-bool Cola::vacio(){
-    if(head>tail || (head && tail)==nullptr){
+template <class T>
+bool Cola<T>::vacio(){
+    if(head == nullptr && tail == nullptr)
         return true;
     else
         return false;
 }
 
-bool Cola::lleno(){
-    
+template <class T>
+bool Cola<T>::lleno(){
+    return ((tail==A+9 && tail-head==9) || (head-- == tail && head!=nullptr));
+}
+
+template <class T>
+bool Cola<T>::push(T val){
+    if(lleno())
+        return false;
+    else{
+        if(tail)
+            tail++;
+        else
+            tail=head;
+        *head=val;
+        return true;
+    }
+}
+
+template <class T>
+bool Cola<T>::pop(T &val){
+    if(vacio())
+        return false;
+    else{
+        val=*tail;
+        tail--;
+        if(tail<head && head==nullptr)
+            head=nullptr;
+        return true;
+    }
 }
 
 int main() {
-  
+    Cola<int> numeros;
+    Cola<char> letras;
+    
+    numeros.push(5);
+    letras.push('a');
+    
+    int a;
+    numeros.pop(a);
+    cout<<a<<endl;
 }
