@@ -4,16 +4,17 @@ using namespace std;
 template <class T>
 
 class Cola{
-  T A[10];
-  T *head=nullptr;
-  T *tail=nullptr;
-  T *final=A+9;
+    T A[10];
+    T *head=nullptr;
+    T *tail=nullptr;
+    T *final=A+9;
   
-  public:
-  bool push(T val);
-  bool pop(T &val);
-  bool vacio();
-  bool lleno();
+    public:
+        bool push(T val);
+        bool pop(T &val);
+        bool vacio();
+        bool lleno();
+        void print();
 };
 
 template <class T>
@@ -26,11 +27,7 @@ bool Cola<T>::vacio(){
 
 template <class T>
 bool Cola<T>::lleno(){
-    if (vacio()) return false;
-
-    T* next = tail + 1;
-    if (next > final) next = A;
-    return next == head;
+     return ((tail==final && tail-head==9) || (head-1 == tail && head!=nullptr));
 }
 
 template <class T>
@@ -41,13 +38,13 @@ bool Cola<T>::push(T val){
     if (vacio()) {
         head = A;
         tail = A;
-        *tail = val;
     } 
     else{
-        *tail = val;
         tail++;
-        if (tail > final) tail = A;
+        if (tail > final) 
+            tail = A;
     }
+    *tail = val;
     return true;
 }
 
@@ -58,25 +55,33 @@ bool Cola<T>::pop(T &val){
         
     val=*head;
     if (head == tail) {
-        // quedó vacía
         head = nullptr;
         tail = nullptr;
-    } else {
+    } 
+    else {
         head++;
-        if (head > final) head = A;
+        if (head > final) 
+        head = A;
     }
     return true;
 }
 
+
+
 int main() {
     Cola<int> numeros;
-    Cola<char> letras;
 
     numeros.push(5);
+    numeros.push(6);
+    numeros.push(7);
 
     int a;
     numeros.pop(a);
     cout << a << endl;
-
+    numeros.pop(a);
+    cout << a << endl;
+    numeros.pop(a);
+    cout << a << endl;
+   
     return 0;
 }
