@@ -26,44 +26,57 @@ bool Cola<T>::vacio(){
 
 template <class T>
 bool Cola<T>::lleno(){
-    return ((tail==A+9 && tail-head==9) || (head-- == tail && head!=nullptr));
+    if (vacio()) return false;
+
+    T* next = tail + 1;
+    if (next > final) next = A;
+    return next == head;
 }
 
 template <class T>
 bool Cola<T>::push(T val){
     if(lleno())
         return false;
+        
+    if (vacio()) {
+        head = A;
+        tail = A;
+        *tail = val;
+    } 
     else{
-        if(tail)
-            tail++;
-        else
-            tail=head;
-        *head=val;
-        return true;
+        *tail = val;
+        tail++;
+        if (tail > final) tail = A;
     }
+    return true;
 }
 
 template <class T>
 bool Cola<T>::pop(T &val){
     if(vacio())
         return false;
-    else{
-        val=*tail;
-        tail--;
-        if(tail<head && head==nullptr)
-            head=nullptr;
-        return true;
+        
+    val=*head;
+    if (head == tail) {
+        // quedó vacía
+        head = nullptr;
+        tail = nullptr;
+    } else {
+        head++;
+        if (head > final) head = A;
     }
+    return true;
 }
 
 int main() {
     Cola<int> numeros;
     Cola<char> letras;
-    
+
     numeros.push(5);
-    letras.push('a');
-    
+
     int a;
     numeros.pop(a);
-    cout<<a<<endl;
+    cout << a << endl;
+
+    return 0;
 }
