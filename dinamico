@@ -1,0 +1,17 @@
+#include <iostream>
+
+int main()
+{
+    int **p=new int *[3];
+    int x=0;
+    
+    for(int **i=p;*i<*(p+3);i++){
+        *(p+x)= new int [3];
+        for(int *j=*i;j<*(i+3);j++){
+            *j=x;
+            x++;
+        }
+    }
+
+    return 0;
+}
