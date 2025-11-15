@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+void Funccad(char* frase, char(*op)(char))
+{
+    int tam=0;
+    char *p = frase;
+    while(*p!='\0'){
+        tam++;
+        p++;
+    }
+
+    char *ini = frase;
+    char *fin = frase+tam-1;
+    
+    for(char *i=ini;i<=fin;i++){
+        if(*i==' '){
+            i++;
+        }
+        if(*fin==' '){
+            fin--;
+        }
+        
+        if(*i!=*fin){
+            return false;
+        }
+    }
+}
+
+int main()
+{
+    char frases[][80] = { "AMO LA PALOMA"};
+
+    for (char(*p)[80] = frases; p < frases + 4; p++)
+        cout << *p << endl;
+
+    auto mayus = [](char a) {
+        return a-32;
+    };
+    
+    reacomoda(A, A + 10,elige);
+
+    cout << "Array despues del reacomodo modulo 3" << endl;
+    for (int i = 0; i < 10; i++)
+        cout << A[i] << " ";
+    cout << endl;
+
+}
