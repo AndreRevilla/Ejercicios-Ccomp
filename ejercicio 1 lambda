@@ -8,16 +8,12 @@ void swap(int *a, int *b){
     *b=tmp;
 }
 
-void reacomoda(int* ini, int* fin)
+void reacomoda(int* ini, int* fin, bool(*op)(int))
 {
-    auto par=[](int a){
-        return a%2;
-    };
-
     int *p=ini;
 
     for(int *i=ini; i<fin; i++){
-        if(par(*i)){
+        if(op(*i)){
             int temp=*i;
             for(int *q=i;q>p;q--){
                 swap(*q,*(q-1));
@@ -29,18 +25,35 @@ void reacomoda(int* ini, int* fin)
 
 int main()
 {
-    int A[10] = {1,2,3,4,5,6,7};
+    int A[10] = { 1,2,3,4,5,6,7,8,9,10 };
 
     cout << "Array antes del reacomodo" << endl;
     for (int i = 0; i < 10; i++)
         cout << A[i] << " ";
     cout << endl;
 
-    reacomoda(A, A + 9, par);
+    auto elige = [](int a) {
+        return a % 3 == 0;
+    };
+    
+    reacomoda(A, A + 10,elige);
 
-    cout << "Array despues del reacomodo" << endl;
+    cout << "Array despues del reacomodo modulo 3" << endl;
     for (int i = 0; i < 10; i++)
         cout << A[i] << " ";
     cout << endl;
 
+    int B[10] = { 1,2,3,4,5,6,7,8,9,10 };
+
+    auto eligepar = [](int a) {
+        return a % 2 == 0;
+    };
+
+    reacomoda(B, B + 10, eligepar);
+
+    cout << "Array despues del reacomodo par" << endl;
+    for (int i = 0; i < 10; i++)
+        cout << B[i] << " ";
+    cout << endl;
+    
 }
