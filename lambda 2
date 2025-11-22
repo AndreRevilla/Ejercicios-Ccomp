@@ -14,35 +14,35 @@ void Funccad(char* frase, char(*op)(char))
     char *fin = frase+tam-1;
     
     for(char *i=ini;i<=fin;i++){
-        if(*i==' '){
-            i++;
-        }
-        if(*fin==' '){
-            fin--;
-        }
-        
-        if(*i!=*fin){
-            return false;
-        }
+        *i=op(*i);
     }
 }
 
 int main()
 {
-    char frases[][80] = { "AMO LA PALOMA"};
+    //char frases[][80] = { "AMO LA PALOMA"};
+    char frases[][80] = { "amo la paloma"};
 
-    for (char(*p)[80] = frases; p < frases + 4; p++)
+    for (char(*p)[80] = frases; p < frases + 1; p++)
         cout << *p << endl;
 
     auto mayus = [](char a) {
-        return a-32;
+        if ((a>=65 && a<=90) or a==' ')
+            return a;
+        return (char)(a-32);
     };
     
-    reacomoda(A, A + 10,elige);
+    auto minus = [](char a) {
+        if ((a>=97 && a<=122) or a==' ')
+            return a;
+        return (char)(a+32);
+    };
+    
+    Funccad(frases[0],mayus);
 
-    cout << "Array despues del reacomodo modulo 3" << endl;
-    for (int i = 0; i < 10; i++)
-        cout << A[i] << " ";
+    cout << "Array despues del la funcion lambda" << endl;
+    //for (int i = 0; i < 10; i++)
+    cout << frases[0] << " ";
     cout << endl;
 
 }
