@@ -1,0 +1,150 @@
+#include <iostream>
+#include <thread>
+using namespace std;
+
+int contarH(char(*mat)[10], char* palabra)
+{
+	int contador=0;
+	char*p=*mat;
+	
+	while(p<*(mat+10))
+	{
+		if(*p==*palabra)
+		{
+			char* temp=palabra;
+			char* compara=p;
+			bool cumple=true;
+			for(;*temp!='\0';)
+			{
+				if(*compara==*temp)
+				{
+					compara++;
+					temp++;
+				}
+				else
+				{
+					cumple=false;
+					break;
+				}
+			}
+			if(cumple)contador+=1;
+			
+			temp=palabra;
+			compara=p;
+			cumple=true;
+			for(;*temp!='\0';)
+			{
+				if(*compara==*temp)
+				{
+					compara--;
+					temp++;
+				}
+				else
+				{
+					cumple=false;
+					break;
+				}
+			}
+			if(cumple)contador+=1;
+			
+		}
+		p++;
+	}
+	
+	return contador;
+}
+int contarV(char(*mat)[10], char* palabra)
+{
+	int contador=0;
+	char*p=*mat;
+	
+	while(p<*(mat+10))
+	{
+		if(*p==*palabra)
+		{
+			char* temp=palabra;
+			char* compara=p;
+			bool cumple=true;
+			for(;*temp!='\0';)
+			{
+				if(compara<*(mat+10) && *compara==*temp)
+				{
+					compara=compara+10;
+					temp++;
+				}
+				else
+				{
+					cumple=false;
+					break;
+				}
+			}
+			if(cumple)contador+=1;
+			
+			temp=palabra;
+			compara=p;
+			cumple=true;
+			for(;*temp!='\0';)
+			{
+				if(compara>*(mat) && *compara==*temp)
+				{
+					compara=compara-10;
+					temp++;
+				}
+				else
+				{
+					cumple=false;
+					break;
+				}
+			}
+			if(cumple)contador+=1;
+			
+		}
+		p++;
+	}
+	
+	return contador;
+}
+
+int contar(char(*mat)[10], char* palabra)
+{
+    int h=0;
+    int v=0;
+    
+    auto contarH_lambda = [&h,&mat,&palabra]() {
+        h = contarH(mat, palabra);
+    };
+    
+    auto contarV_lambda = [&v,&mat,&palabra]() {
+        v = contarV(mat, palabra);
+    };
+    
+    thread th(contarH_lambda);
+    thread tv(contarV_lambda);
+    
+    th.join();
+    tv.join();
+    
+	return h+v; //Cambie este return como vea por conveniente
+}
+
+int main()
+{
+	char mat[10][10] = {
+		{'C','A','S','A','D','O','R','A','D','O'},
+	    {'D','C','A','S','A','D','O','A','S','A'},
+		{'D','O','R','A','D','O','C','A','S','A'},
+	    {'A','S','A','D','O','R','A','D','O','S'},
+		{'C','A','S','A','D','O','C','A','S','A'},
+	    {'A','D','O','A','S','A','D','O','S','O'},
+		{'A','S','A','C','C','A','S','A','D','O'},
+	    {'A','S','A','A','S','A','C','A','S','A'},
+		{'C','A','S','A','D','O','A','S','A','D'},
+    	{'D','O','R','A','D','O','A','S','A','C'},
+	};
+	
+	char palabras[][10] = { "CASADO", "ASADO","DORADO","CASA","ASA" };
+	
+	cout << "CONTADOR DE PALABRAS" << endl;
+	for (char(*p)[10] = palabras; p < palabras + 5; p++)
+		cout << "La palabra " << *p << " aparece " << contar(mat,*p) << " veces" << endl;
+}
