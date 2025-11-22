@@ -60,13 +60,31 @@ void swap(int *posicion, char movimiento){
 
 int main()
 {
-    int B[3][3]={{8,7,6},{5,4,3},{2,0,1}};
-    char movimiento='w';
-    while(true){
+    int B[3][3]={{1,2,3},{4,5,6},{7,0,8}};
+    int C[3][3]={{1,2,3},{4,5,6},{7,8,0}};
+    char movimiento;
+    bool win=0;
+    
+    
+    while(!win){
+
         for(int *p=*B; p<*B+9 ; p++){
             cout << *p << " ";
             if ((p - *B + 1) % 3 == 0)
                 cout << endl;
+        }
+
+        bool iguales = true;
+        for(int *p=*B, *q=*C; p < *B+9; p++, q++){
+            if(*p != *q){
+                iguales = false;
+                break;
+            }
+        }
+
+        if(iguales){
+            cout << "Ganaste" << endl;
+            break;
         }
         
         for(int *p=*B; p<*B+9 ; p++){
@@ -82,6 +100,7 @@ int main()
                 break;
             }
         }
+        
     }
     return 0;
 }
