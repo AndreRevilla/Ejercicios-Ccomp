@@ -1,0 +1,36 @@
+#include <iostream>
+#include <thread>
+using namespace std;
+
+void print(int i){
+    cout<<i<<" - ";
+}
+
+void imprime(int* ini, int* fin, bool(*op)(int))
+{
+    int *p=ini;
+    
+    for(int *i=ini; i<fin; i++){
+        if(op(*i)){
+            thread t1(print,*i);
+            t1.join();
+        }
+    }
+}
+
+int main()
+{
+    int A[10]={15,23,2,6,5,72,100,35,8,11};
+    
+    auto par = [](int a) {
+        return a%2==0;
+    };
+    
+    auto impar = [](int a) {
+        return a%2!=0;
+    };
+    
+    imprime(A,A+10,par);
+    
+    return 0;
+}
