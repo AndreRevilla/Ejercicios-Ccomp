@@ -2,7 +2,7 @@
 #include <thread>
 using namespace std;
 
-int contarH(char(*mat)[10], char* palabra)
+int contarD(char(*mat)[10], char* palabra)
 {
 	int contador=0;
 	char*p=*mat;
@@ -28,10 +28,26 @@ int contarH(char(*mat)[10], char* palabra)
 				}
 			}
 			if(cumple)contador+=1;
-			
-			temp=palabra;
-			compara=p;
-			cumple=true;
+		}
+		p++;
+	}
+    return contador;
+}
+
+
+
+int contarI(char(*mat)[10], char* palabra)
+{
+	int contador=0;
+	char*p=*mat;
+	
+	while(p<*(mat+10))
+	{
+		if(*p==*palabra)
+		{
+			char* temp=palabra;
+			char* compara=p;
+			bool cumple=true;
 			for(;*temp!='\0';)
 			{
 				if(*compara==*temp)
@@ -53,7 +69,8 @@ int contarH(char(*mat)[10], char* palabra)
 	
 	return contador;
 }
-int contarV(char(*mat)[10], char* palabra)
+
+int contarB(char(*mat)[10], char* palabra)
 {
 	int contador=0;
 	char*p=*mat;
@@ -79,10 +96,25 @@ int contarV(char(*mat)[10], char* palabra)
 				}
 			}
 			if(cumple)contador+=1;
+		}
+		p++;
+	}
+	
+	return contador;
+}
 			
-			temp=palabra;
-			compara=p;
-			cumple=true;
+int contarA(char(*mat)[10], char* palabra)
+{
+	int contador=0;
+	char*p=*mat;
+	
+	while(p<*(mat+10))
+	{
+		if(*p==*palabra)
+		{
+			char* temp=palabra;
+			char* compara=p;
+			bool cumple=true;
 			for(;*temp!='\0';)
 			{
 				if(compara>*(mat) && *compara==*temp)
@@ -105,26 +137,25 @@ int contarV(char(*mat)[10], char* palabra)
 	return contador;
 }
 
+
 int contar(char(*mat)[10], char* palabra)
 {
-    int h=0;
-    int v=0;
-    
-    auto contarH_lambda = [&h,&mat,&palabra]() {
-        h = contarH(mat, palabra);
-    };
-    
-    auto contarV_lambda = [&v,&mat,&palabra]() {
-        v = contarV(mat, palabra);
-    };
-    
-    thread th(contarH_lambda);
-    thread tv(contarV_lambda);
-    
-    th.join();
-    tv.join();
-    
-	return h+v; //Cambie este return como vea por conveniente
+	int rD = 0;
+    int	rI = 0; 
+    int rB = 0; 
+    int rA = 0;
+
+    thread t1([&]() { rD = contarD(mat, palabra); });
+    thread t2([&]() { rI = contarI(mat, palabra); });
+    thread t3([&]() { rB = contarB(mat, palabra); });
+    thread t4([&]() { rA = contarA(mat, palabra); });
+
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+
+    return rD + rI + rB + rA;
 }
 
 int main()
